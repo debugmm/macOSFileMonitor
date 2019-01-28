@@ -13,7 +13,3 @@
 
     后续会添加针对文件夹下，子文件相关事件处理。
     
-## install
-    
-    platform :osx, '10.7'
-    pod 'FileMonitor', :git => 'https://git.tigerbrokers.net/ftiger_ios_group/FileMonitor.git'
