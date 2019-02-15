@@ -247,9 +247,9 @@ static void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallB
     else{
         //item has been renamed
         if(self.fileMonitorDelegate &&
-           [self.fileMonitorDelegate respondsToSelector:@selector(fileRenameToName:)]){
+           [self.fileMonitorDelegate respondsToSelector:@selector(itemRenameToName:)]){
             
-            [self.fileMonitorDelegate fileRenameToName:newName];
+            [self.fileMonitorDelegate itemRenameToName:newName];
         }
     }
     
@@ -268,7 +268,7 @@ static void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallB
 
 #pragma mark - fs event call back
 //fsevent事件，FSEventStreamEventFlags声明的flag有时候并非与名字相对应
-//比如创建了文件，但是被创建的文件发生的事件并非创建，而是rename
+//比如创建了文件，但是被创建的文件发生的事件并非创建，而是rename 或者是文件删除事件 remove
 //因此，为了统一起见使用了：FSEventStreamEventFlags，任何文件都会走进FSEventStreamEventFlags标记
 void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]){
     
@@ -285,17 +285,23 @@ void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
             continue;
         }
         
+        if(![[NSFileManager defaultManager] fileExistsAtPath:filepath]){
+            //文件删除事件
+            //被监控的文件夹目录下面，有文件被删除
+            goto fileDeletedEvent;
+        }
+        
         if(flagg & kFSEventStreamEventFlagItemCreated){
             //文件创建事件
-            goto fileCreateEvent;
+            goto fileCreatedEvent;
         }
         
         if(flagg & kFSEventStreamEventFlagItemIsFile){
             //文件操作相关的任何事件，只要这个文件是一个常规的文件，而不是目录
-            goto fileCreateEvent;
+            goto fileCreatedEvent;
         }
         
-    fileCreateEvent:
+    fileCreatedEvent:
         //文件创建事件
         if(ff &&
            [ff isKindOfClass:[TBFileMonitor class]] &&
@@ -304,6 +310,18 @@ void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
             
             [ff.fileMonitorDelegate itemCreatedAtPath:filepath];
         }
+        continue;
+        
+    fileDeletedEvent:
+        //文件删除事件
+        if(ff &&
+           [ff isKindOfClass:[TBFileMonitor class]] &&
+           ff.fileMonitorDelegate &&
+           [ff.fileMonitorDelegate respondsToSelector:@selector(itemDeletedWithOriginItemPath:)]){
+            
+            [ff.fileMonitorDelegate itemDeletedWithOriginItemPath:filepath];
+        }
+        continue;
     }
 }
 

@@ -9,34 +9,41 @@
 #import <Foundation/Foundation.h>
 
 /**
- @brief file monitor protocol.
- any object which wants receiving file-modification message,should implement the protocol methods.
+ @brief 文件 or 文件夹监控协议
  */
 @protocol TBFileMonitorProtocol <NSObject>
 
 @optional
 
 /**
- @brief file has been renamed to a new Name
+ @brief 被监控的文件 or 文件夹被重命名了。文件新名字为：newName
 
- @param newName a new file name
+ @param newName 被重名明后的文件名字
  */
--(void)fileRenameToName:(nonnull NSString *)newName;
-
+-(void)itemRenameToName:(nonnull NSString *)newName;
 
 /**
- @brief item(file or directory) has been moved to new file url(new url-new file path)
+ @brief 被监控的文件 or 文件夹被移动到了。文件的新路径为：newURL
 
- @param newURL new file url
+ @param newURL 被移动之后的新路径
+ 
  */
 -(void)itemMoveToURL:(nonnull NSURL *)newURL;
 
+#pragma mark - be monitored directory
 /**
- @brief 被监控的文件夹下，有文件被创建。被创建的文件路径是newFullPath（包括文件名）
+ @brief 被监控的文件夹（注意：是文件夹），下面有文件被创建
 
- @param newFullPath 被创建的文件完整路径
+ @param newFullPath 被创建的文件完整路径（文件在本地的绝对路径）
  */
 -(void)itemCreatedAtPath:(nonnull NSString *)newFullPath;
+
+/**
+ @brief 被监控的文件夹（注意：是文件夹），下面有文件被删除
+
+ @param originFullPath 被删除文件原路径（本地绝对路径）
+ */
+-(void)itemDeletedWithOriginItemPath:(nonnull NSString *)originFullPath;
 
 @end
 

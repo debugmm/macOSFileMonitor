@@ -82,7 +82,7 @@
 }
 
 #pragma mark -
--(void)fileRenameToName:(NSString *)newName{
+-(void)itemRenameToName:(NSString *)newName{
     
     [self updateTextViewString:[NSString stringWithFormat:@"new name:%@",[newName stringByRemovingPercentEncoding]]];
 }
@@ -96,6 +96,11 @@
 -(void)itemCreatedAtPath:(NSString *)newFullPath{
     
     NSString *str=[NSString stringWithFormat:@"created file:%@",newFullPath];
+    [self updateTextViewString:str];
+}
+
+-(void)itemDeletedWithOriginItemPath:(NSString *)originFullPath{
+    NSString *str=[NSString stringWithFormat:@"deleted file:%@",originFullPath];
     [self updateTextViewString:str];
 }
 
