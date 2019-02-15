@@ -88,14 +88,14 @@
 			children = (
 				1613A09421FB154B0090506F /* AppDelegate.h */,
 				1613A09C21FB154B0090506F /* AppDelegate.m */,
-				1613A09621FB154B0090506F /* ViewController.m */,
-				1613A09E21FB154B0090506F /* ViewController.h */,
-				1613A0B021FB15C10090506F /* FileMonitorClasses */,
-				1613A09721FB154B0090506F /* Main.storyboard */,
-				1613A09921FB154B0090506F /* FileMonitorDemo.entitlements */,
 				1613A09521FB154B0090506F /* Assets.xcassets */,
-				1613A09B21FB154B0090506F /* main.m */,
+				1613A0B021FB15C10090506F /* FileMonitorClasses */,
+				1613A09921FB154B0090506F /* FileMonitorDemo.entitlements */,
 				1613A09D21FB154B0090506F /* Info.plist */,
+				1613A09B21FB154B0090506F /* main.m */,
+				1613A09721FB154B0090506F /* Main.storyboard */,
+				1613A09E21FB154B0090506F /* ViewController.h */,
+				1613A09621FB154B0090506F /* ViewController.m */,
 			);
 			path = FileMonitorDemo;
 			sourceTree = "<group>";
@@ -121,8 +121,8 @@
 		1613A0B021FB15C10090506F /* FileMonitorClasses */ = {
 			isa = PBXGroup;
 			children = (
-				1613A0B121FB15C10090506F /* TBFileMonitor.m */,
 				1613A0B221FB15C10090506F /* TBFileMonitor.h */,
+				1613A0B121FB15C10090506F /* TBFileMonitor.m */,
 			);
 			path = FileMonitorClasses;
 			sourceTree = "<group>";
@@ -222,6 +222,11 @@
 				TargetAttributes = {
 					1650A03F21EDF320009BA9C3 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					1650A05521EDF322009BA9C3 = {
 						CreatedOnToolsVersion = 10.0;
@@ -452,7 +457,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = FileMonitorDemo/FileMonitorDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = FileMonitorDemo/Info.plist;
@@ -469,7 +473,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = FileMonitorDemo/FileMonitorDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = FileMonitorDemo/Info.plist;

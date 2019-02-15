@@ -31,6 +31,13 @@
  */
 -(void)itemMoveToURL:(nonnull NSURL *)newURL;
 
+/**
+ @brief 被监控的文件夹下，有文件被创建。被创建的文件路径是newFullPath（包括文件名）
+
+ @param newFullPath 被创建的文件完整路径
+ */
+-(void)itemCreatedAtPath:(nonnull NSString *)newFullPath;
+
 @end
 
 NS_ASSUME_NONNULL_BEGIN
@@ -71,14 +78,16 @@ NS_ASSUME_NONNULL_BEGIN
                                      error:(NSError * _Nullable __autoreleasing *)er;
 
 #pragma mark - instance method
+
 /**
- @brief file monitor remove self from monitored file.
-        so,the file monitor will NOT receive any file-modify message.
- 
- @discussion any file monitor must invoke this method,
-             otherwise it can cause memory leak.
+ @brief 停止监听文件
  */
--(void)removeMonitor;
+-(void)stopMonitor;
+
+/**
+ @brief 开始监听文件
+ */
+-(void)startMonitor;
 
 @end
 
