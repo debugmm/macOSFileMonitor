@@ -269,7 +269,7 @@ static void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallB
 #pragma mark - fs event call back
 //fsevent事件，FSEventStreamEventFlags声明的flag有时候并非与名字相对应
 //比如创建了文件，但是被创建的文件发生的事件并非创建，而是rename 或者是文件删除事件 remove
-//因此，为了统一起见使用了：FSEventStreamEventFlags，任何文件都会走进FSEventStreamEventFlags标记
+//因此，为了统一起见使用了：kFSEventStreamEventFlagItemIsFile，任何文件都会走进kFSEventStreamEventFlagItemIsFile标记
 void fsevents_callback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]){
     
     NSArray *pathArr = (__bridge NSArray*)eventPaths;
